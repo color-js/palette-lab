@@ -1,0 +1,36 @@
+{
+	"name": "palette-lab",
+	"version": "0.0.0",
+	"description": "Analyze the hell out of your color tokens",
+	"keywords": [
+		"color",
+		"palette",
+		"analyzer",
+		"design tokens"
+	],
+	"homepage": "https://github.com/color-js/palette-lab#readme",
+	"bugs": {
+		"url": "https://github.com/color-js/palette-lab/issues"
+	},
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/color-js/palette-lab.git"
+	},
+	"license": "MIT",
+	"author": "Lea Verou",
+	"type": "module",
+	"main": "src/index.js",
+	"scripts": {
+		"test": "echo \"Error: no test specified\" && exit 1"
+	},
+	"devDependencies": {
+		"prettier-plugin-brace-style": "^0.7.2",
+		"prettier-plugin-merge": "^0.7.2",
+		"prettier-plugin-space-before-function-paren": "^0.0.5",
+		"release-it": "^18.1.2"
+	},
+	"dependencies": {
+		"colorjs.io": "^0.6.0-alpha.1",
+		"glob": "^11.0.1"
+	}
+}
