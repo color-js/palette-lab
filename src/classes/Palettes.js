@@ -34,4 +34,8 @@ export default class Palettes extends AugmentedObject {
 	static get tints () {
 		return Palette.tints;
 	}
+
+	static get allKeys () {
+		return { tints: this.tints, hues: this.hues, palettes: this.ids };
+	}
 }

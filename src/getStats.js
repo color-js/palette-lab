@@ -13,7 +13,7 @@ export default function (palettes, { queries, filter, ...options } = {}) {
 	queries = toArray(queries);
 
 	palettes = Palettes.get(palettes);
-	let all = { tints: Palettes.tints, hues: Palettes.hues, palettes: Palettes.ids };
+	let all = Palettes.allKeys;
 
 	for (let key in all) {
 		if (!all[key]) {

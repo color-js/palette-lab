@@ -10,13 +10,23 @@ import getSubset from "./util/getSubset.js";
  * @param {*} options
  * @returns {{ caption: string, results: Object }}
  */
-export default function (palettes, query, { all } = {}) {
+export default function (palettes, query, options = {}) {
 	palettes = Palettes.get(palettes);
+	options.all ??= Palettes.allKeys;
+
+	if (typeof query === "function") {
+		query = query(palettes, options);
+	}
+
 	query = new Query(query);
 
 	let { getValue, getKey, filter, caption, stats } = query;
 	let results = {};
-	let used = filter ? getSubset(all, filter) : all;
+	let used = { ...options.all };
+
+	if (filter) {
+		used = getSubset(used, filter);
+	}
 
 	for (let palette of used.palettes) {
 		for (let hue of used.hues) {
@@ -52,7 +62,18 @@ export default function (palettes, query, { all } = {}) {
 		}
 
 		results[key] = stats.reduce((acc, stat) => {
-			acc[stat] = toPrecision(aggregates[stat](values, acc));
+			let value = aggregates[stat](values, acc);
+
+			if (typeof value === "object") {
+				// getValue() can return complex objects
+				for (let key in value) {
+					acc[key] = toPrecision(value[key]);
+				}
+			}
+			else {
+				acc[stat] = toPrecision(value);
+			}
+
 			return acc;
 		}, {});
 	}

@@ -36,6 +36,15 @@ export function values (values) {
 	return values;
 }
 
+/**
+ * Just returns the first value (mainly useful for single-value queries)
+ * @param {any[]} values
+ * @returns {any}
+ */
+export function value (values) {
+	return values[0];
+}
+
 export function median (values) {
 	let sorted = values.slice().sort((a, b) => a - b);
 	let mid = Math.floor(sorted.length / 2);
