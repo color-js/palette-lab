@@ -54,6 +54,12 @@ export function median (values) {
 // Second order aggregates
 // These are aggregates that operate on the results of other aggregates
 
+export function stddev (values, aggregates) {
+	aggregates.avg ??= avg(values);
+	let squaredDiffs = values.map(v => Math.pow(v - aggregates.avg, 2));
+	return Math.sqrt(avg(squaredDiffs));
+}
+
 /**
  * Extent of the range between the min and max values
  * @param {number[]} values
