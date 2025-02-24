@@ -48,6 +48,18 @@ export default function (palettes, query, options = {}) {
 				key = Array.isArray(key) ? key.join(Query.KEY_JOINER) : key;
 				let value = getValue.call(palettes, color, { hue, tint, palette }, used);
 
+				// Apply any late filters
+				if (filter?.other) {
+					for (let f of filter.other) {
+						if (typeof f === "function") {
+							let include = f(value, key, color, { hue, tint, palette });
+							if (include === false) {
+								continue;
+							}
+						}
+					}
+				}
+
 				results[key] ??= [];
 				results[key].push(value);
 			}

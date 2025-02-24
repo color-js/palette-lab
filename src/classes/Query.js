@@ -1,5 +1,6 @@
 import Color from "colorjs.io";
 import { extend, capitalize, toArray } from "../util/util.js";
+import parseFilter from "../util/parseFilter.js";
 
 export default class Query {
 	static KEY_JOINER = " > ";
@@ -10,6 +11,10 @@ export default class Query {
 		}
 
 		extend(this, Query.defaultOptions, query);
+
+		if (this.filter) {
+			this.filter = parseFilter(this.filter);
+		}
 
 		if (this.component) {
 			this.componentMeta = Color.Space.resolveCoord(query.component, "oklch");

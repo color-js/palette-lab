@@ -1,11 +1,7 @@
-import parseFilter from "./parseFilter.js";
-
 /**
  * Apply a list of args (hues, tints, palette ids) to add or exclude against the corresponding arrays
  */
 export default function getSubset (all, filter) {
-	filter = parseFilter(filter);
-
 	let used = {
 		tints: undefined,
 		hues: undefined,
