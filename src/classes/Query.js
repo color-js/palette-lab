@@ -35,22 +35,20 @@ function getDefaultKey (by) {
 	by = Array.isArray(by) ? by : [by];
 
 	return variables =>
-		by
-			.map((variableName, i) => {
-				if (variableName === "tint") {
-					let tint = String(variables.tint);
+		by.map((variableName, i) => {
+			if (variableName === "tint") {
+				let tint = String(variables.tint);
 
-					// Drop leading zeros because they throw off row order
-					if (tint.startsWith("0") && !tint.endsWith("0")) {
-						return tint.replace(/^0+/, "");
-					}
-
-					return tint;
+				// Drop leading zeros because they throw off row order
+				if (tint.startsWith("0") && !tint.endsWith("0")) {
+					return tint.replace(/^0+/, "");
 				}
 
-				return variables[variableName];
-			})
-			.join(Query.KEY_JOINER);
+				return tint;
+			}
+
+			return variables[variableName];
+		});
 }
 
 function getDefaultCaption (query) {
