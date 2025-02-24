@@ -23,6 +23,18 @@ export function toPrecision (value, precision = 2) {
 	return +Number(value).toPrecision(precision);
 }
 
+export function roundTo (value, roundTo = 1) {
+	let decimals = roundTo.toString().split(".")[1]?.length ?? 0;
+	let ret = Math.round(value / roundTo) * roundTo;
+
+	if (decimals > 0) {
+		// Eliminate IEEE 754 floating point errors
+		ret = +ret.toFixed(decimals);
+	}
+
+	return ret;
+}
+
 export function normalizeAngles (angles) {
 	// First, normalize
 	angles = angles.map(h => ((h % 360) + 360) % 360);
