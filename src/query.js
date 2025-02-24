@@ -45,7 +45,7 @@ export default function (palettes, query, options = {}) {
 				let color = palettes[palette][hue][tint];
 
 				let key = getKey.call(palettes, { hue, tint, palette });
-				key = typeof key === "string" ? key : key.join(Query.KEY_JOINER);
+				key = Array.isArray(key) ? key.join(Query.KEY_JOINER) : key;
 				let value = getValue.call(palettes, color, { hue, tint, palette }, used);
 
 				results[key] ??= [];
