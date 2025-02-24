@@ -27,7 +27,7 @@ export default class Query {
 		get caption () {
 			return getDefaultCaption(this);
 		},
-		stats: ["min", "max", "median", "count"],
+		stats: ["min", "max", "median", "extent", "count"],
 	};
 }
 
