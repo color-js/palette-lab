@@ -68,8 +68,7 @@ function getDefaultCaption (query) {
 	}
 
 	if (query.filter) {
-		let filter = Array.isArray(query.filter) ? query.filter.join(", ") : query.filter;
-		ret += ` (${filter})`;
+		ret += ` (${query.filter.source.join(", ")})`;
 	}
 
 	ret = ret.replace("hue by hue", "hue by color name");

@@ -11,6 +11,7 @@ export default function (filter) {
 		hues: [],
 		palettes: [],
 		other: [],
+		source: filter,
 	};
 
 	for (let arg of filter) {
