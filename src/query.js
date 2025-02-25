@@ -1,6 +1,6 @@
 import Palettes from "./classes/Palettes.js";
 import Query from "./classes/Query.js";
-import { aggregates, normalizeAngles, toPrecision } from "./util/util.js";
+import { aggregates, normalizeAngles, toPrecision, sortObject } from "./util/util.js";
 import getSubset from "./util/getSubset.js";
 
 /**
@@ -20,7 +20,7 @@ export default function (palettes, query, options = {}) {
 
 	query = new Query(query);
 
-	let { getValue, getKey, filter, caption, stats } = query;
+	let { getValue, getKey, filter, caption, stats, sort } = query;
 	let results = {};
 	let used = { ...options.all };
 
@@ -89,6 +89,9 @@ export default function (palettes, query, options = {}) {
 
 			return acc;
 		}, {});
+
+	if (sort) {
+		results = sortObject(results, sort);
 	}
 
 	return { caption, results };
