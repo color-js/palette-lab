@@ -1,5 +1,5 @@
 import query from "../src/query.js";
-import { normalizeAngles, clamp } from "../src/util/util.js";
+import { normalizeAngles, subtractAngles } from "../src/util/util.js";
 
 export default function (palettes, { all } = {}) {
 	let { results } = query(palettes, {
@@ -57,9 +57,4 @@ function getHue (hue, hueRanges) {
 	}
 
 	return { name: minColorName, distance: minMid };
-}
-
-function subtractAngles (θ1, θ2) {
-	let [a, b] = normalizeAngles([θ1, θ2]);
-	return a - b;
 }

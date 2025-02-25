@@ -72,6 +72,11 @@ export function normalizeAngles (angles) {
 	return angles;
 }
 
+export function subtractAngles (θ1, θ2) {
+	let [a, b] = normalizeAngles([θ1, θ2]);
+	return a - b;
+}
+
 export function capitalize (str) {
 	if (!str) {
 		return "";
