@@ -12,7 +12,7 @@ import getSubset from "./util/getSubset.js";
  */
 export default function (palettes, query, options = {}) {
 	palettes = Palettes.get(palettes);
-	options.all ??= Palettes.allKeys;
+	let { all = Palettes.allKeys } = options;
 
 	if (typeof query === "function") {
 		query = query(palettes, options);
@@ -22,7 +22,7 @@ export default function (palettes, query, options = {}) {
 
 	let { getValue, getKey, filter, caption, stats, sort } = query;
 	let results = {};
-	let used = { ...options.all };
+	let used = { ...all };
 
 	if (filter) {
 		used = getSubset(used, filter);
@@ -44,15 +44,27 @@ export default function (palettes, query, options = {}) {
 			for (let tint of tints) {
 				let color = palettes[palette][hue][tint];
 
-				let key = getKey.call(palettes, { hue, tint, palette });
+				let value = getValue.call(palettes, color, { hue, tint, palette }, used, all);
+				let key = getKey.call(palettes, { hue, tint, palette, value }, used, all);
 				key = Array.isArray(key) ? key.join(Query.KEY_JOINER) : key;
-				let value = getValue.call(palettes, color, { hue, tint, palette }, used);
 
 				// Apply any late filters
 				if (filter?.other) {
 					for (let f of filter.other) {
 						if (typeof f === "function") {
-							let include = f(value, key, color, { hue, tint, palette });
+							let include = f.call(
+								palettes,
+								value,
+								key,
+								color,
+								{
+									hue,
+									tint,
+									palette,
+								},
+								used,
+								all,
+							);
 							if (include === false) {
 								continue;
 							}
@@ -75,20 +87,41 @@ export default function (palettes, query, options = {}) {
 		}
 
 		results[key] = stats.reduce((acc, stat) => {
+			if (!(stat in aggregates)) {
+				// Might be an aggregate added by another function, e.g. minValues
+				return acc;
+			}
+
 			let value = aggregates[stat](values, acc);
 
-			if (typeof value === "object") {
+			if (Array.isArray(value)) {
+				acc[stat] = value.slice();
+			}
+			else if (typeof value === "object") {
 				// getValue() can return complex objects
 				for (let key in value) {
-					acc[key] = toPrecision(value[key]);
+					acc[key] = value[key];
 				}
 			}
 			else {
-				acc[stat] = toPrecision(value);
+				acc[stat] = value;
 			}
 
 			return acc;
 		}, {});
+
+		// Remove stats not in the stats list
+		for (let stat in results[key]) {
+			if (stat in aggregates && !stats.includes(stat)) {
+				delete results[key][stat];
+			}
+		}
+
+		// Format the rest
+		for (let stat in results[key]) {
+			results[key][stat] = toPrecision(results[key][stat]);
+		}
+	}
 
 	if (sort) {
 		results = sortObject(results, sort);

@@ -16,6 +16,10 @@ export function clamp (min, value, max) {
 }
 
 export function toPrecision (value, precision = 2) {
+	if (Array.isArray(value)) {
+		return value.map(v => toPrecision(v, precision));
+	}
+
 	if (isNaN(value)) {
 		return value;
 	}

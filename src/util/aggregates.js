@@ -1,12 +1,28 @@
 // First order aggregates
 // These are aggregates that operate on the values directly.
 
-export function min (values) {
-	return Math.min(...values.filter(v => !isNaN(v)));
+export function min (values, aggregates) {
+	values = values.filter(v => !isNaN(v));
+	let minValue = Math.min(...values);
+	aggregates.minValues = values.filter(v => v === minValue);
+	return minValue;
 }
 
-export function max (values) {
-	return Math.max(...values.filter(v => !isNaN(v)));
+export function minValues (values, aggregates) {
+	aggregates.min ??= min(values);
+	return aggregates.minValues;
+}
+
+export function max (values, aggregates) {
+	values = values.filter(v => !isNaN(v));
+	let maxValue = Math.max(...values);
+	aggregates.maxValues = values.filter(v => v === maxValue);
+	return maxValue;
+}
+
+export function maxValues (values, aggregates) {
+	aggregates.max ??= max(values);
+	return aggregates.maxValues;
 }
 
 /**
@@ -55,6 +71,10 @@ export function median (values) {
 // These are aggregates that operate on the results of other aggregates
 
 export function stddev (values, aggregates) {
+	if (values.length <= 1) {
+		return 0;
+	}
+
 	aggregates.avg ??= avg(values);
 	let squaredDiffs = values.map(v => Math.pow(v - aggregates.avg, 2));
 	return Math.sqrt(avg(squaredDiffs));
@@ -67,6 +87,10 @@ export function stddev (values, aggregates) {
  * @returns {number}
  */
 export function extent (values, aggregates) {
+	if (values.length <= 1) {
+		return 0;
+	}
+
 	aggregates.min ??= min(values);
 	aggregates.max ??= max(values);
 	return aggregates.max - aggregates.min;
