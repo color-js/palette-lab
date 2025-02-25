@@ -42,6 +42,8 @@ if (settingsArgs.length > 0) {
 	);
 }
 
+settings.queries ??= settings.query ?? settings.q;
+
 if (settings.queries) {
 	// Queries file(s)
 	let queriesFiles = await glob(settings.queries, { ignore: "node_modules/**" });
