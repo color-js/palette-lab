@@ -79,6 +79,22 @@ export default class Scale extends AugmentedObject {
 		return clamp(Scale.MIN_CORE_TINT, this.maxChromaTint, Scale.MAX_CORE_TINT);
 	}
 
+	get minTint () {
+		return Math.min(...Scale.tints);
+	}
+
+	get maxTint () {
+		return Math.max(...Scale.tints);
+	}
+
+	get min () {
+		return this[this.minTint];
+	}
+
+	get max () {
+		return this[this.maxTint];
+	}
+
 	get coreTintChroma () {
 		return this[this.coreTint].get("oklch.c");
 	}
