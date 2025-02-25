@@ -32,7 +32,7 @@ export default class Query {
 		get caption () {
 			return getDefaultCaption(this);
 		},
-		stats: ["min", "max", "median", "extent", "count"],
+		stats: ["min", "max", "median", "avg", "stddev", "count"],
 	};
 }
 
