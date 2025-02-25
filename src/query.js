@@ -46,7 +46,7 @@ export default function (palettes, query, options = {}) {
 				let color = palettes[palette][hue][tint];
 
 				let value = getValue.call(palettes, color, { hue, tint, palette }, used, all);
-				let key = getKey.call(palettes, { hue, tint, palette, value }, used, all);
+				let key = getKey.call(palettes, color, { hue, tint, palette, value }, used, all);
 				key = Array.isArray(key) ? key.join(Query.KEY_JOINER) : key;
 
 				// Apply any late filters

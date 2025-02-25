@@ -39,7 +39,7 @@ export default class Query {
 function getDefaultKey (by) {
 	by = Array.isArray(by) ? by : [by];
 
-	return variables =>
+	return (color, variables) =>
 		by.map((variableName, i) => {
 			if (variableName === "tint") {
 				let tint = String(variables.tint);

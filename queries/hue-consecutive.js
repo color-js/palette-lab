@@ -5,7 +5,7 @@ export default {
 		let nextColor = palettes[palette][hue][nextTint];
 		return color.h - nextColor.h;
 	},
-	getKey ({ tint }) {
+	getKey (color, { tint }) {
 		return `${tint} → ${getNextTint(tint)}`;
 	},
 	filter: "-95",

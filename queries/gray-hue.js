@@ -1,5 +1,5 @@
 import query from "../src/query.js";
-import { normalizeAngles, subtractAngles } from "../src/util/util.js";
+import { subtractAngles } from "../src/util/util.js";
 
 export default function (palettes, { all } = {}) {
 	let { results } = query(palettes, {

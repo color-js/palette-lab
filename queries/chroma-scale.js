@@ -6,7 +6,7 @@ let baseQuery = {
 		let next = scale[nextTint];
 		return { next: next.c, core: color.c };
 	},
-	getKey ({ palette, hue, tint }) {
+	getKey (color, { palette, hue, tint }) {
 		let scale = this[palette][hue];
 		let nextTint = scale.getNext(tint);
 		return `${tint} → ${nextTint}`;
