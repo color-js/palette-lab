@@ -1,7 +1,8 @@
 import Palettes from "./classes/Palettes.js";
 import Query from "./classes/Query.js";
-import { aggregates, normalizeAngles, toPrecision, sortObject } from "./util/util.js";
+import { aggregates, normalizeAngles, toPrecision } from "./util/util.js";
 import getSubset from "./util/getSubset.js";
+import sortObject from "./util/sortObject.js";
 
 /**
  * Run a single query against a set of palettes.
