@@ -1,5 +1,15 @@
 // First order aggregates
 // These are aggregates that operate on the values directly.
+export function excludeOutliers (values, threshold = 3, aggregates) {
+	if (values.length <= 1) {
+		return values;
+	}
+
+	aggregates.avg ??= avg(values);
+	aggregates.stddev ??= stddev(values, aggregates);
+
+	return values.filter(v => Math.abs(v - aggregates.avg) <= threshold * aggregates.stddev);
+}
 
 export function min (values, aggregates) {
 	values = values.filter(v => !isNaN(v));

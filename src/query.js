@@ -83,6 +83,11 @@ export default function (palettes, query, options = {}) {
 	for (let key in results) {
 		let values = results[key];
 
+		let acc = {};
+		if (query.excludeOutliers) {
+			values = aggregates.excludeOutliers(values, query.excludeOutliers, acc);
+		}
+
 		if (query.componentMeta?.type === "angle") {
 			values = normalizeAngles(values);
 		}
@@ -109,7 +114,7 @@ export default function (palettes, query, options = {}) {
 			}
 
 			return acc;
-		}, {});
+		}, acc);
 
 		// Remove stats not in the stats list
 		for (let stat in results[key]) {

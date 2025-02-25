@@ -13,6 +13,7 @@ let baseQuery = {
 	},
 	sort: ["extent", "desc"],
 	stats: ["min", "max", "avg", "median", "extent", "stddev", "count"],
+	excludeOutliers: 2,
 	filter: ["core", "-gray"],
 };
 
