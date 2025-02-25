@@ -83,13 +83,18 @@ export default class Scale extends AugmentedObject {
 		return this[this.coreTint].get("oklch.c");
 	}
 
+	getIndex (tint) {
+		// Loose equals to account for string vs number
+		return Scale.tints.findIndex(t => t == tint);
+	}
+
 	getNext (tint, offset = 1) {
-		let tintIndex = Scale.tints.indexOf(tint);
+		let tintIndex = this.getIndex(tint);
 		return Scale.tints[tintIndex + offset];
 	}
 
 	getPrevious (tint, offset = 1) {
-		let tintIndex = Scale.tints.indexOf(tint);
+		let tintIndex = this.getIndex(tint);
 		return Scale.tints[tintIndex - offset];
 	}
 
