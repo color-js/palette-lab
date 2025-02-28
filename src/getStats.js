@@ -24,6 +24,10 @@ export default function (palettes, { queries, filter, ...options } = {}) {
 	let used = getSubset(all, filter);
 	let results = [];
 
+	queries = queries.flatMap(q => {
+		return typeof q === "function" ? q(palettes, options) : q;
+	});
+
 	for (let q of queries) {
 		let result = query(palettes, q, { all: used, ...options });
 		results.push(result);
