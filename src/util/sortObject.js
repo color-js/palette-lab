@@ -14,7 +14,11 @@ export default function sortObject (obj, sort) {
 	}
 
 	let sortFactor = order === "desc" ? -1 : 1;
-	if (sort === "numeric") {
+	if (sort === true) {
+		// Sort by key, lexically
+		keys = keys.sort(Intl.Collator().compare);
+	}
+	else if (sort === "numeric") {
 		// Sort
 		keys = keys.sort((a, b) => sortFactor * (a - b));
 	}
