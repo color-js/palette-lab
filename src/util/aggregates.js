@@ -55,6 +55,16 @@ export function maxValues (values, aggregates) {
 	return aggregates.maxValues;
 }
 
+export function minAbs (values) {
+	values = values.filter(v => !isNaN(v)).map(Math.abs);
+	return Math.min(...values);
+}
+
+export function maxAbs (values) {
+	values = values.filter(v => !isNaN(v)).map(Math.abs);
+	return Math.max(...values);
+}
+
 /**
  * Average (mean) of the values
  * @param {*} values
