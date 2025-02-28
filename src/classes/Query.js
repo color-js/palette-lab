@@ -16,13 +16,17 @@ export default class Query {
 			this.filter = parseFilter(this.filter);
 		}
 
-		if (this.component) {
+		if (this.component && this.component !== "tint") {
 			this.componentMeta = Color.Space.resolveCoord(query.component, "oklch");
 		}
 	}
 
 	static defaultOptions = {
 		get getValue () {
+			if (this.component === "tint") {
+				return (color, variables) => variables.tint;
+			}
+
 			return color => color.get(this.component);
 		},
 		by: "tint",
