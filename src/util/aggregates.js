@@ -5,10 +5,30 @@ export function excludeOutliers (values, threshold = 3, aggregates) {
 		return values;
 	}
 
-	aggregates.avg ??= avg(values);
-	aggregates.stddev ??= stddev(values, aggregates);
+	if (Array.isArray(threshold)) {
+		let [count, unit] = threshold;
 
-	return values.filter(v => Math.abs(v - aggregates.avg) <= threshold * aggregates.stddev);
+		if (unit === "stddev") {
+			aggregates.stddev ??= stddev(values, aggregates);
+			aggregates.avg ??= avg(values);
+			threshold = count * aggregates.stddev;
+			return values.filter(v => Math.abs(v - aggregates.avg) <= threshold);
+		}
+		else if (unit === "%" || unit === "percent") {
+			threshold = (count / 100) * values.length;
+		}
+	}
+
+	threshold = Math.round(threshold);
+
+	values.sort((a, b) => a - b);
+
+	if (2 * threshold + 1 > values.length) {
+		// If the threshold is greater than half the length of the array, just return the middle value
+		return [values[Math.floor(values.length / 2)]];
+	}
+
+	return values.slice(threshold, -threshold);
 }
 
 export function min (values, aggregates) {
