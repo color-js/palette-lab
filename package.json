@@ -18,6 +18,10 @@
 	},
 	"license": "MIT",
 	"author": "Lea Verou",
+	"funding": {
+		"type": "opencollective",
+		"url": "https://opencollective.com/color"
+	},
 	"type": "module",
 	"main": "src/index.js",
 	"scripts": {
